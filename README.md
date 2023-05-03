@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ## How do I get the token?
 
-The token required for this tool is a personal api key for your Key-Drop account. You can get this token from your account settings or create a new one from the api keys section of the website.
+The token required for this tool is a personal api key for your Key-Drop account. You can get this token from "https://key-drop.com/es/token", you have to login first.
 
 ## How to use
 
