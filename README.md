@@ -47,5 +47,5 @@ Contributions are welcome! To contribute, fork the repository, make your changes
 
 ## Todo:
 
-1. Make it use websocket instead of refreshing it every time. (For now I added a delay option on config so that its faster.)
-2. Make the won checker work.
+1. Make it use websocket instead of refreshing it every time. ✅
+2. Make the won checker work. 🔃
