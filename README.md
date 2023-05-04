@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ## How do I get the token?
 
-The token required for this tool is a personal api key for your Key-Drop account. You can get this token from "https://key-drop.com/es/token", you have to login first.
+The token required for this tool is a personal api key for your Key-Drop account. You can get this token from your account settings or create a new one from the api keys section of the website.
 
 ## How to use
 
@@ -44,3 +44,8 @@ Follow the prompts to input your token and start sniping battles.
 ## How to contribute
 
 Contributions are welcome! To contribute, fork the repository, make your changes, and submit a pull request.
+
+## Todo:
+
+1. Make it use websocket instead of refreshing it every time. (For now I added a delay option on config so that its faster.)
+2. Make the won checker work.
