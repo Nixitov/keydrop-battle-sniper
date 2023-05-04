@@ -1,3 +1,5 @@
 colorama
 requests
 toml
+websockets
+asyncio
