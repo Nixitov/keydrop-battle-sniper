@@ -1,5 +1,4 @@
 from src.utils.color import Color
-import asyncio
 import websockets
 import json
 
