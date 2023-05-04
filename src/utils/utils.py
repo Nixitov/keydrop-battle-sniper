@@ -18,13 +18,13 @@ class Utils():
         if not self.exists('config.toml'):
             with open('config.toml', 'w') as configfile:
                 print(f'\n   {self.color.red}Config file was not found, creating it...')
-                configfile.writelines(f'[Main]\nsteam_user_id = 123456\nmax_ticket_cost = 1\nauto_open_joined_battles = true\n\n[Scraper]\ndelay = 0.2')
+                configfile.writelines(f'[Main]\nsession_id = "ur_session_id"\nsteam_user_id = 123456\nmax_ticket_cost = 1\nuse_token = false\nauto_open_joined_battles = true\n\n[Scraper]\ndelay = 0.2')
                 configfile.flush()
                 print(f'   {self.color.green}Config file was created, edit it and press enter')
                 input()
         config = toml.load('config.toml')
 
-        return config['Main']['steam_user_id'], int(config['Main']['max_ticket_cost']), bool(config['Main']['auto_open_joined_battles']), float(config['Scraper']['delay'])
+        return config['Main']['session_id'], config['Main']['steam_user_id'], int(config['Main']['max_ticket_cost']), bool(config['Main']['use_token']), bool(config['Main']['auto_open_joined_battles']), float(config['Scraper']['delay'])
 
     def ask_for_token(self):
         print(f'\n   {self.color.cyan}Input your token! ')

@@ -1,5 +1,6 @@
+undetected-chromedriver
+websockets
 colorama
 requests
-toml
-websockets
 asyncio
+toml

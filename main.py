@@ -1,5 +1,6 @@
 from src.joiner.websocket_scraper import WbScraper
 from src.joiner.battle_info import BattleInfo
+from src.utils.cf_bypass import CfBypass
 from src.joiner.scraper import Scraper
 from src.joiner.joiner import Joiner
 from src.utils.color import Color
@@ -14,11 +15,14 @@ class BattleSniper():
         self.utils = Utils()
         self.joiner = Joiner()
         self.scraper = Scraper()
+        self.cf_bypass = CfBypass()
         self.wb_scraper = WbScraper()
         self.battle_info = BattleInfo()
         self.token = ''
+        self.session_id = ''
         self.steam_user_id = 123123123
         self.max_ticket_cost = 1
+        self.use_token = False
         self.auto_open_joined_battles = True
         self.delay = 0.2
         self.errors = 0
@@ -29,9 +33,14 @@ class BattleSniper():
         self.start()
 
     def load(self):
-        self.steam_user_id, self.max_ticket_cost, self.auto_open_joined_battles, self.delay = self.utils.load_config()
+        self.session_id, self.steam_user_id, self.max_ticket_cost, self.use_token, self.auto_open_joined_battles, self.delay = self.utils.load_config()
         self.utils.cls()
-        self.token = self.utils.ask_for_token()
+        if self.use_token:
+            self.token = self.utils.ask_for_token()
+        else:
+            print(f'\n   {self.color.cyan}Getting token from session_id...')
+            self.token = self.cf_bypass.get_token(self.session_id)
+            print(f'\n   {self.color.green}Bypassed cloudflare, token generated')
 
     def print_status(self):
         while not self.stop:
@@ -53,20 +62,18 @@ class BattleSniper():
                 battle = asyncio.run(self.wb_scraper.get_battle(self.token))
                 battle_id = str(battle['id'])
                 answer = self.joiner.join(battle, self.max_ticket_cost, self.token)
+                if 'message":"Unauthorized"' in answer:
+                    self.token = self.cf_bypass.get_token(self.session_id)
                 self.times_scraped +=1
                 if answer[0] == 'joined':
                     if len(self.message_history) > 9:
                         self.message_history.pop(0)
                     self.message_history.append(answer[1])
-                    self.message_history.append(f'\n   Joiner finished, getting battle info...')
-                    time.sleep(5)
+                    self.message_history.append(f'   {self.color.cyan}Getting battle {self.color.green}{battle_id}{self.color.cyan} info...')
                     if self.auto_open_joined_battles:
                         self.utils.open_url(f'https://key-drop.com/es/case-battle/{battle_id}')
                     else:
                         self.message_history.append(self.battle_info.get_battle_info(battle_id, str(self.steam_user_id), self.token))
-                    time.sleep(1)
-                    self.stop = True
-                    break
                 elif answer[0] == 'bad':
                     if len(self.message_history) > 9:
                         self.message_history.pop(0)
