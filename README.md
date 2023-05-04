@@ -26,9 +26,26 @@ Install the required Python packages:
 pip install -r requirements.txt
 ```
 
+## Config info:
+`session_id`: Login into https://key-drop.com, then open developer tab, go into application, cookies and copy session_id value.
+
+`steam_user_id` Your steam user id, steam has a guide on how to get it.(https://help.steampowered.com/en/faqs/view/2816-BE67-5B69-0FEC).
+
+`max_ticket_cost`: Max ticket price to join a giveaway.
+
+`use_token (not recomended)`: true or false, enabling it will ask for token instead of using session_id.
+
+`auto_open_joined_battles`: Opens a browser with the battle so that u can see it when joined.
+
+`delay`: Delay for every battle scrape.
+
 ## How do I get the token?
 
-The token required for this tool is a personal api key for your Key-Drop account. You can get this token from your account settings or create a new one from the api keys section of the website.
+1. Login into your browser and go into this site:
+```
+https://key-drop.com/es/token
+```
+2. Copy the whole text.
 
 ## How to use
 

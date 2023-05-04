@@ -1,9 +1,0 @@
-[Main]
-session_id = "s3rnk3tgpprm6oi87sj2vqkmvejgoob4"
-steam_user_id = 123456
-max_ticket_cost = 1
-use_token = true
-auto_open_joined_battles = true
-
-[Scraper]
-delay = 0.2
