@@ -25,6 +25,7 @@ class BattleSniper():
         self.use_token = False
         self.auto_open_joined_battles = True
         self.delay = 0.2
+        self.case_filter = []
         self.errors = 0
         self.times_scraped = 0
         self.join_tries = 0
@@ -33,7 +34,7 @@ class BattleSniper():
         self.start()
 
     def load(self):
-        self.session_id, self.steam_user_id, self.max_ticket_cost, self.use_token, self.auto_open_joined_battles, self.delay = self.utils.load_config()
+        self.session_id, self.steam_user_id, self.max_ticket_cost, self.use_token, self.auto_open_joined_battles, self.delay, self.case_filter = self.utils.load_config()
         self.utils.cls()
         if self.use_token:
             self.token = self.utils.ask_for_token()
@@ -59,7 +60,7 @@ class BattleSniper():
         threading.Thread(target=self.print_status).start()
         while True:
             try:
-                battle = asyncio.run(self.wb_scraper.get_battle(self.token))
+                battle = asyncio.run(self.wb_scraper.get_battle(self.token, self.case_filter))
                 battle_id = str(battle['id'])
                 answer = self.joiner.join(battle, self.max_ticket_cost, self.token)
                 if 'message":"Unauthorized"' in answer:

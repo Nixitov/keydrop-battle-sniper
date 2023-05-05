@@ -9,7 +9,7 @@ class CfBypass():
     def bypass_cf(self, session_id):
         try:
             options = uc.ChromeOptions()
-            options.add_argument('--headless')
+            #options.add_argument('--headless')
             driver = uc.Chrome(options=options)
             driver.get('https://key-drop.com')
             driver.add_cookie({"name": "session_id", "value": session_id})
@@ -20,8 +20,8 @@ class CfBypass():
             driver.close()
             driver.quit()
             return 'valid', str(vio_shield["value"]), str(cf_bm["value"])
-        except:
-            return 'invalid', 'There was an error bypassing cloudflare, make sure your session_id is valid!'
+        except Exception as err:
+            return 'invalid', f'There was an error bypassing cloudflare, make sure your session_id is valid! {err}'
 
     def get_token_req(self, session_id, vioShield, cf_bm):
         try:

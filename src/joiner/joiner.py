@@ -14,6 +14,7 @@ class Joiner():
             #print(f"\n   {self.color.cyan}Battle {self.color.yellow}{battle['id']} {self.color.cyan}is valid, trying to join...")
             spot_to_join = str(random.randint(0, max_users))
             battle_id = str(battle['id'])
+            battle_cases = list(battle['CasesNames'])
             battle_url = f'https://kdrp2.com/CaseBattle/joinCaseBattle/{battle_id}/{spot_to_join}'
 
             headers = {
@@ -45,7 +46,7 @@ class Joiner():
                 if not response_data['success']:
                     return 'bad', f"   {self.color.cyan}Failed to join battle {self.color.yellow}{battle_id}: {self.color.red}{response_data['message']}"
                 else:
-                    return 'joined', f"   {self.color.green}Joined battle {self.color.yellow}{battle_id} {self.color.green}successfully!"
+                    return 'joined', f"   {self.color.green}Joined battle {self.color.yellow}{battle_id} - {battle_cases} {self.color.green}successfully!"
             else:
                 return 'bad', f"   {self.color.cyan}Failed to join battle {self.color.yellow}{battle_id}: {self.color.red}{req.content}"
         else:
