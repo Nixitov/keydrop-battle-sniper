@@ -9,7 +9,7 @@ class CfBypass():
     def bypass_cf(self, session_id):
         try:
             options = uc.ChromeOptions()
-            #options.add_argument('--headless')
+            options.add_argument('--headless')
             driver = uc.Chrome(options=options)
             driver.get('https://key-drop.com')
             driver.add_cookie({"name": "session_id", "value": session_id})
