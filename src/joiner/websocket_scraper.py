@@ -2,6 +2,7 @@ from src.utils.color import Color
 import websockets
 import json
 import re
+import asyncio
 
 class WbScraper():
     def __init__(self):
@@ -15,8 +16,18 @@ class WbScraper():
             auth_message = f"40/case-battle,{json.dumps(auth_payload)}"
             await websocket.send(auth_message)
 
+            async def keep_alive():
+                while True:
+                    await asyncio.sleep(25)
+                    await websocket.send("3")
+
+            asyncio.ensure_future(keep_alive())
+
             while True:
                 message = await websocket.recv()
+
+                if "," not in message:
+                    continue
 
                 message_type, message_data = message.split(",", maxsplit=1)
                 if message_type == "42/case-battle":
